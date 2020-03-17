@@ -1,0 +1,21 @@
+{
+  "compileOnSave": true,
+  "include": ["src", "types/*", "types/**/*", "node_modules/@types/**/*", "tests"],
+  "exclude": ["node_modules"],
+  "compilerOptions": {
+    "module": "commonjs",
+    "declaration": true,
+    "removeComments": true,
+    "esModuleInterop": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "target": "es2015",
+    "sourceMap": true,
+    "outDir": "./dist",
+    "noUnusedLocals": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "skipLibCheck": true,
+    "baseUrl": "./"
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "nested": {
+    "Movie": {
+      "fields": {
+        "name": {
+          "type": "string",
+          "id": 1,
+          "options": {}
+        },
+        "year": {
+          "type": "int32",
+          "id": 2,
+          "options": {}
+        },
+        "rating": {
+          "type": "float",
+          "id": 3,
+          "options": {}
+        },
+        "cast": {
+          "rule": "repeated",
+          "type": "string",
+          "id": 4,
+          "options": {}
+        }
+      }
+    },
+    "MoviesResult": {
+      "fields": {
+        "result": {
+          "rule": "repeated",
+          "type": "Movie",
+          "id": 1,
+          "options": {}
+        }
+      }
+    },
+    "EmptyRequest": {
+      "fields": {}
+    },
+    "ExampleService": {
+      "methods": {
+        "getMovies": {
+          "requestType": "EmptyRequest",
+          "responseType": "MoviesResult"
+        }
+      }
+    }
+  }
+}

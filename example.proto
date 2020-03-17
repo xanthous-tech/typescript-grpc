@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+message Movie {
+
+    string name = 1;
+    int32 year = 2;
+    float rating = 3;
+    repeated string cast = 4;
+}
+
+message MoviesResult {
+
+    repeated Movie result = 1;
+}
+
+message EmptyRequest {
+}
+service ExampleService {
+    rpc getMovies (EmptyRequest) returns (MoviesResult);
+}
