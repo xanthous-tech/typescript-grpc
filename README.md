@@ -56,6 +56,36 @@ class ExampleService {
     log('get movies called');
     return new MoviesResult({ result: [] });
   }
+
+  @Method({
+    requestType: 'SearchByCastInput',
+    requestStream: false,
+    responseType: 'Movie',
+    responseStream: true,
+  })
+  searchMoviesByCast(req: SearchByCastInput): Observable<Movie> {
+    const movies = [
+      {
+        cast: ['Tom Cruise', 'Simon Pegg', 'Jeremy Renner'],
+        name: 'Mission: Impossible Rogue Nation',
+        rating: 0.97,
+        year: 2015,
+      },
+      {
+        cast: ['Tom Cruise', 'Simon Pegg', 'Henry Cavill'],
+        name: 'Mission: Impossible - Fallout',
+        rating: 0.93,
+        year: 2018,
+      },
+      {
+        cast: ['Leonardo DiCaprio', 'Jonah Hill', 'Margot Robbie'],
+        name: 'The Wolf of Wall Street',
+        rating: 0.78,
+        year: 2013,
+      },
+    ];
+
+    return from(movies.filter(movie => movie.cast.indexOf(req.castName) > -1).map(m => new Movie(m)));
 }
 
 async function main(): Promise<void> {
@@ -86,5 +116,5 @@ main();
 
 # Features
 
-- Modern service method handlers via Promise and rxjs streams (TODO)
+- Modern service method handlers via Promise and rxjs streams
 - Auto proto generation using annotations
