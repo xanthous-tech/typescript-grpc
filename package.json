@@ -9,7 +9,7 @@
   },
   "scripts": {
     "clean": "rimraf lib",
-    "lint": "eslint src/**/*.ts --fix",
+    "lint": "eslint \"src/**/*.ts\" --fix",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "build": "tsc",
     "prepublish": "npm run clean && npm run lint && npm run format && npm run build",
@@ -17,6 +17,7 @@
     "debug": "DEBUG=typescript-grpc:* yarn start"
   },
   "devDependencies": {
+    "@grpc/proto-loader": "^0.5.3",
     "@types/debug": "^4.1.5",
     "@types/google-protobuf": "^3.7.2",
     "@types/node": "^13.9.1",
@@ -28,17 +29,20 @@
     "eslint-config-prettier": "^6.10.0",
     "eslint-plugin-import": "^2.20.1",
     "eslint-plugin-prettier": "^3.1.2",
+    "grpc": "^1.24.2",
     "prettier": "^1.19.1",
+    "protobufjs": "^6.8.9",
     "rimraf": "^3.0.2",
     "ts-node": "^8.6.2",
     "typescript": "^3.8.3"
   },
-  "dependencies": {
+  "peerDependencies": {
     "@grpc/proto-loader": "^0.5.3",
-    "debug": "^4.1.1",
-    "google-protobuf": "^3.11.4",
     "grpc": "^1.24.2",
-    "protobufjs": "^6.8.9",
+    "protobufjs": "^6.8.9"
+  },
+  "dependencies": {
+    "debug": "^4.1.1",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^6.5.4"
   }
