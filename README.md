@@ -44,6 +44,12 @@ class MoviesResult extends Message<MoviesResult> {
 @Type.d()
 class EmptyRequest extends Message<EmptyRequest> {}
 
+@Type.d()
+class SearchByCastInput extends Message<SearchByCastInput> {
+  @Field.d(1, 'string')
+  castName: string;
+}
+
 @Service()
 class ExampleService {
   @Method({
