@@ -100,9 +100,7 @@ async function main(): Promise<void> {
 
   const protoPath = await generateProto('example');
 
-  const packageDefinition = await load(protoPath, {
-    keepCase: true,
-  });
+  const packageDefinition = await load(protoPath);
 
   const server = new Server({
     'grpc.max_send_message_length': -1,
