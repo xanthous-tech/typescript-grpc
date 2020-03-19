@@ -2,6 +2,8 @@ import debug from 'debug';
 import { Type, Field, Message } from 'protobufjs';
 import { load } from '@grpc/proto-loader';
 import { Server, ServiceDefinition, ServerCredentials } from 'grpc';
+import { Observable, from } from 'rxjs';
+import * as Ops from 'rxjs/operators';
 
 import { Service, Method, generateProto, wrapServiceMethods } from '.';
 
@@ -31,6 +33,12 @@ class MoviesResult extends Message<MoviesResult> {
 @Type.d()
 class EmptyRequest extends Message<EmptyRequest> {}
 
+@Type.d()
+class SearchByCastInput extends Message<SearchByCastInput> {
+  @Field.d(1, 'string')
+  castName: string;
+}
+
 @Service()
 class ExampleService {
   @Method({
@@ -43,6 +51,41 @@ class ExampleService {
     log('get movies called');
     return new MoviesResult({ result: [] });
   }
+
+  @Method({
+    requestType: 'SearchByCastInput',
+    requestStream: false,
+    responseType: 'Movie',
+    responseStream: true,
+  })
+  searchMoviesByCast(req: SearchByCastInput): Observable<Movie> {
+    log(req);
+
+    const movies = [
+      {
+        cast: ['Tom Cruise', 'Simon Pegg', 'Jeremy Renner'],
+        name: 'Mission: Impossible Rogue Nation',
+        rating: 0.97,
+        year: 2015,
+      },
+      {
+        cast: ['Tom Cruise', 'Simon Pegg', 'Henry Cavill'],
+        name: 'Mission: Impossible - Fallout',
+        rating: 0.93,
+        year: 2018,
+      },
+      {
+        cast: ['Leonardo DiCaprio', 'Jonah Hill', 'Margot Robbie'],
+        name: 'The Wolf of Wall Street',
+        rating: 0.78,
+        year: 2013,
+      },
+    ];
+
+    return from(movies.filter(movie => movie.cast.indexOf(req.castName) > -1).map(m => new Movie(m))).pipe(
+      Ops.tap((movie: Movie) => log(movie.toJSON())),
+    );
+  }
 }
 
 async function main(): Promise<void> {
@@ -51,9 +94,7 @@ async function main(): Promise<void> {
 
   const protoPath = await generateProto('example');
 
-  const packageDefinition = await load(protoPath, {
-    keepCase: true,
-  });
+  const packageDefinition = await load(protoPath);
 
   const server = new Server({
     'grpc.max_send_message_length': -1,

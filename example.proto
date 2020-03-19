@@ -15,6 +15,12 @@ message MoviesResult {
 
 message EmptyRequest {
 }
+
+message SearchByCastInput {
+
+    string cast_name = 1;
+}
 service ExampleService {
     rpc getMovies (EmptyRequest) returns (MoviesResult);
+    rpc searchMoviesByCast (SearchByCastInput) returns (stream Movie);
 }

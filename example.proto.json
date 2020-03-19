@@ -38,11 +38,25 @@
     "EmptyRequest": {
       "fields": {}
     },
+    "SearchByCastInput": {
+      "fields": {
+        "castName": {
+          "type": "string",
+          "id": 1,
+          "options": {}
+        }
+      }
+    },
     "ExampleService": {
       "methods": {
         "getMovies": {
           "requestType": "EmptyRequest",
           "responseType": "MoviesResult"
+        },
+        "searchMoviesByCast": {
+          "requestType": "SearchByCastInput",
+          "responseType": "Movie",
+          "responseStream": true
         }
       }
     }
