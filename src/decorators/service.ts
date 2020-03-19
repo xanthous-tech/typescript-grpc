@@ -1,6 +1,6 @@
-import { Service as ProtobufService } from "protobufjs";
+import { Service as ProtobufService } from 'protobufjs';
 
-import { serviceStorage, serviceMethodConnections, methodStorage } from "../storage";
+import { serviceStorage, serviceMethodConnections, methodStorage, getMethodStorageKey } from '../storage';
 
 export function Service(options: { name?: string } = {}): ClassDecorator {
   return function serviceClassDecorator(target: Function): void {
@@ -8,12 +8,9 @@ export function Service(options: { name?: string } = {}): ClassDecorator {
 
     const protobufService = new ProtobufService(serviceName);
 
-    if (
-      serviceMethodConnections[serviceName] &&
-      Array.isArray(serviceMethodConnections[serviceName])
-    ) {
+    if (serviceMethodConnections[serviceName] && Array.isArray(serviceMethodConnections[serviceName])) {
       serviceMethodConnections[serviceName].forEach((methodName: string) => {
-        protobufService.add(methodStorage[methodName]);
+        protobufService.add(methodStorage[getMethodStorageKey(serviceName, methodName)]);
       });
     }
 
