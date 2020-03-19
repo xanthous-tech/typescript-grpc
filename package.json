@@ -1,8 +1,13 @@
 {
   "name": "typescript-grpc",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "main": "lib/index.js",
+  "author": "Simon Liang <simon@divby0.io>",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/xanthous-tech/typescript-grpc.git"
+  },
   "volta": {
     "node": "12.16.1",
     "yarn": "1.21.1"
